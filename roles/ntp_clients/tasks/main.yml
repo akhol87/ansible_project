@@ -1,0 +1,21 @@
+- name: Make yum cache
+  yum:
+    update_cache: yes
+
+- name: Install chrony
+  yum:
+    name: chrony
+    state: present
+
+- name: Deploy NTP client configuration
+  template:
+    src: ntp-client.conf.j2
+    dest: /etc/chrony.conf
+    mode: '0644'
+  notify: restart chronyd
+
+- name: Enable and start chronyd
+  systemd:
+    name: chronyd
+    enabled: yes
+    state: started

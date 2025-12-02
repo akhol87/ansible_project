@@ -1,0 +1,13 @@
+$TTL 86400
+@   IN  SOA {{ dns_primary }}. admin.{{ dns_domain }}. (
+    {{ lookup('pipe','date +%Y%m%d%H') }}
+    3600
+    1800
+    604800
+    86400 )
+;
+@       IN  NS  {{ dns_primary }}.
+
+{% for host in groups['all'] %}
+{{ hostvars[host].ansible_host.split('.')[-1] }} IN PTR {{ hostvars[host].inventory_hostname }}.
+{% endfor %}

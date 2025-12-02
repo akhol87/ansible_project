@@ -1,0 +1,6 @@
+---
+- name: Configure NTP master server
+  hosts: ntp_master
+  become: yes
+  roles:
+    - ntp_master

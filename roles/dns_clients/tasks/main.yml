@@ -1,0 +1,10 @@
+---
+- name: Install bind-utils on client servers
+  yum:
+    name: bind-utils
+    state: present
+    update_cache: yes
+
+- name: Disable SELinux
+  selinux:
+    state: disabled    

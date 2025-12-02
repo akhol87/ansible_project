@@ -1,0 +1,17 @@
+---
+- name: Check named syntax
+  command: named-checkconf
+  listen: "Check named syntax"
+
+- name: Check forward zone syntax
+  command: named-checkzone {{ dns_domain }} /var/named/db.forward
+  listen: "Check forward zone syntax"
+
+- name: Check reverse zone syntax
+  command: named-checkzone 0.0.10.in-addr.arpa /var/named/db.reverse
+  listen: "Check reverse zone syntax"
+
+- name: Restart DNS
+  service:
+    name: named
+    state: restarted

@@ -1,0 +1,58 @@
+---
+- name: Install BIND
+  yum:
+    name: bind
+    state: present
+
+- name: Ensure named is enabled
+  service:
+    name: named
+    enabled: yes
+    state: started
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Allow DNS in firewall
+  firewalld:
+    service: dns
+    state: enabled
+    permanent: yes
+    immediate: yes
+
+- name: Generate named.conf from template
+  template:
+    src: named.conf.j2
+    dest: /etc/named.conf
+    owner: root
+    group: named
+    mode: '0640'
+    backup: yes
+  notify:
+    - Check named syntax
+    - Check forward zone syntax
+    - Check reverse zone syntax
+    - Restart DNS
+
+- name: Generate forward zone db
+  template:
+    src: db.forward.j2
+    dest: /var/named/db.forward
+    owner: named
+    group: named
+    mode: '0640'
+  notify:
+    - Check forward zone syntax
+    - Restart DNS
+
+- name: Generate reverse zone db
+  template:
+    src: db.reverse.j2
+    dest: /var/named/db.reverse
+    owner: named
+    group: named
+    mode: '0640'
+  notify:
+    - Check reverse zone syntax
+    - Restart DNS

@@ -1,0 +1,6 @@
+---
+- name: Install bind-utils on all client servers
+  hosts: all:!dns_primary        # all servers except nds_primary
+  become: yes
+  roles:
+    - dns_clients

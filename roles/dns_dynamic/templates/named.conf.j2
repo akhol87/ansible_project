@@ -1,0 +1,35 @@
+options {
+    directory "/var/named";
+    listen-on port 53 { any; };           # listen on all IPv4 interfaces
+    listen-on-v6 { none; };               # disable IPv6 to avoid recursion issues
+    recursion yes;                        # enable recursion
+
+    allow-query { 10.0.0.0/24; };         # only allow internal clients
+    allow-query-cache { 10.0.0.0/24; };
+    allow-recursion { 10.0.0.0/24; };     # only internal clients can recurse
+
+    forwarders {
+        8.8.8.8;                           # Google DNS
+        1.1.1.1;                           # Cloudflare DNS
+    };
+    forward only;                          # only use forwarders for external domains
+};
+
+logging {
+    channel default_debug {
+        file "data/named.run";
+        severity dynamic;
+    };
+};
+
+zone "ziyotek.local" IN {
+    type master;
+    file "/var/named/db.forward";
+    allow-transfer { any; };
+};
+
+zone "0.0.10.in-addr.arpa" IN {
+    type master;
+    file "/var/named/db.reverse";
+    allow-transfer { any; };
+};

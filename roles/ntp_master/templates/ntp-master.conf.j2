@@ -1,0 +1,12 @@
+# NTP Master
+{% for server in ntp_pool %}
+server {{ server }}
+{% endfor %}
+
+allow {{ ntp_allow_network }}
+local stratum 10
+
+driftfile /var/lib/chrony/drift
+makestep 1.0 3
+rtcsync
+logdir /var/log/chrony

@@ -1,0 +1,7 @@
+ntp_pool:
+  - 0.pool.ntp.org iburst
+  - 1.pool.ntp.org iburst
+  - 2.pool.ntp.org iburst
+  - 3.pool.ntp.org iburst
+
+ntp_allow_network: 10.0.0.0/24

@@ -1,0 +1,9 @@
+- name: restart firewalld
+  service: 
+    name: firewalld
+    state: restarted
+
+- name: restart chronyd
+  systemd:
+    name: chronyd
+    state: restarted    

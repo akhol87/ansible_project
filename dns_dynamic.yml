@@ -1,0 +1,6 @@
+---
+- name: Dynamic DNS rebuild using inventory
+  hosts: dns_primary
+  become: yes
+  roles:
+    - dns_dynamic

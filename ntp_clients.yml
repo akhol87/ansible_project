@@ -1,0 +1,6 @@
+---
+- name: Configure NTP clients
+  hosts: ntp_clients
+  become: yes
+  roles:
+    - ntp_clients
