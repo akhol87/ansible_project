@@ -4,9 +4,10 @@ options {
     listen-on-v6 { none; };               # disable IPv6 to avoid recursion issues
     recursion yes;                        # enable recursion
 
-    allow-query { 10.0.0.0/24; };         # only allow internal clients
-    allow-query-cache { 10.0.0.0/24; };
-    allow-recursion { 10.0.0.0/24; };     # only internal clients can recurse
+allow-recursion { 127.0.0.1; 10.0.0.0/24; };
+allow-query-cache { 127.0.0.1; 10.0.0.0/24; };
+allow-query { 127.0.0.1; 10.0.0.0/24; };
+
 
     forwarders {
         8.8.8.8;                           # Google DNS

@@ -1,0 +1,576 @@
+<repo-to-text>
+Directory: ansible
+
+Directory Structure:
+<directory_structure>
+.
+.
+├── ./dns_clients.yml
+├── ./dns_dynamic.yml
+├── ./.git
+│   ├── ./.git/branches
+│   ├── ./.git/COMMIT_EDITMSG
+│   ├── ./.git/config
+│   ├── ./.git/description
+│   ├── ./.git/FETCH_HEAD
+│   ├── ./.git/HEAD
+│   ├── ./.git/hooks
+│   │   ├── ./.git/hooks/applypatch-msg.sample
+│   │   ├── ./.git/hooks/commit-msg.sample
+│   │   ├── ./.git/hooks/fsmonitor-watchman.sample
+│   │   ├── ./.git/hooks/post-update.sample
+│   │   ├── ./.git/hooks/pre-applypatch.sample
+│   │   ├── ./.git/hooks/pre-commit.sample
+│   │   ├── ./.git/hooks/pre-merge-commit.sample
+│   │   ├── ./.git/hooks/prepare-commit-msg.sample
+│   │   ├── ./.git/hooks/pre-push.sample
+│   │   ├── ./.git/hooks/pre-rebase.sample
+│   │   ├── ./.git/hooks/pre-receive.sample
+│   │   ├── ./.git/hooks/push-to-checkout.sample
+│   │   ├── ./.git/hooks/sendemail-validate.sample
+│   │   └── ./.git/hooks/update.sample
+│   ├── ./.git/index
+│   ├── ./.git/info
+│   │   └── ./.git/info/exclude
+│   ├── ./.git/logs
+│   │   ├── ./.git/logs/HEAD
+│   │   └── ./.git/logs/refs
+│   │       ├── ./.git/logs/refs/heads
+│   │       │   └── ./.git/logs/refs/heads/master
+│   │       └── ./.git/logs/refs/remotes
+│   │           └── ./.git/logs/refs/remotes/origin
+│   │               └── ./.git/logs/refs/remotes/origin/master
+│   ├── ./.git/objects
+│   │   ├── ./.git/objects/03
+│   │   │   └── ./.git/objects/03/c01ecb11bbdea2cb91cdfd5d8e40c95173de20
+│   │   ├── ./.git/objects/06
+│   │   │   └── ./.git/objects/06/361c738064c853e22a9d642ba7622a6a3a25ce
+│   │   ├── ./.git/objects/0c
+│   │   │   └── ./.git/objects/0c/1952e97bf99358f0da2a13e00de95aa8b892b8
+│   │   ├── ./.git/objects/14
+│   │   │   └── ./.git/objects/14/b649e571e15b7cfcb69295a80caa92f1cc1953
+│   │   ├── ./.git/objects/15
+│   │   │   └── ./.git/objects/15/2f56438a891d99a879eecd009f8421f2dc4080
+│   │   ├── ./.git/objects/26
+│   │   │   └── ./.git/objects/26/0510fd657599bc8fbf975b3040812af36c0413
+│   │   ├── ./.git/objects/36
+│   │   │   └── ./.git/objects/36/9ef70776acebd4ccc1f43610aa104fb3a45a91
+│   │   ├── ./.git/objects/3f
+│   │   │   └── ./.git/objects/3f/b880713a38f691c2ee3514bf450ea042b2b3fc
+│   │   ├── ./.git/objects/48
+│   │   │   ├── ./.git/objects/48/9bc0158166ef8578deb5b83072d92980ce83ce
+│   │   │   └── ./.git/objects/48/ddb567d7dd2d390370d71414973f3b1f00d186
+│   │   ├── ./.git/objects/4a
+│   │   │   └── ./.git/objects/4a/589324f2fdec5830cc4769c78d20331990d39a
+│   │   ├── ./.git/objects/4b
+│   │   │   └── ./.git/objects/4b/b45d6e4d653d9b3e79b4e2bfbea80143d07f47
+│   │   ├── ./.git/objects/4f
+│   │   │   └── ./.git/objects/4f/6072d58e65fd642a32747084e41d582710207b
+│   │   ├── ./.git/objects/50
+│   │   │   └── ./.git/objects/50/9dab3214c23f7432a2b927aece499ebf8ee9ec
+│   │   ├── ./.git/objects/52
+│   │   │   └── ./.git/objects/52/1cede45617b5d09c7062a02a164e17d7087276
+│   │   ├── ./.git/objects/57
+│   │   │   └── ./.git/objects/57/c3067db4557cc2445794234c5cbb0547864abe
+│   │   ├── ./.git/objects/59
+│   │   │   └── ./.git/objects/59/3c1eb59e0a881daaa90144b51c3f149896eb9b
+│   │   ├── ./.git/objects/5b
+│   │   │   └── ./.git/objects/5b/68524bf5b1869d80277698ddf46d725ae763d4
+│   │   ├── ./.git/objects/5c
+│   │   │   └── ./.git/objects/5c/8ed5a02190b963dcccb598ba88d20ae1ff4a65
+│   │   ├── ./.git/objects/5f
+│   │   │   └── ./.git/objects/5f/1a9d1366bcc8763dcee309045fe124ebf22b25
+│   │   ├── ./.git/objects/86
+│   │   │   └── ./.git/objects/86/aba7d5135230dc4757f878536c230e56039b33
+│   │   ├── ./.git/objects/87
+│   │   │   └── ./.git/objects/87/a08fd90470295b9679765f5583ca075affae8d
+│   │   ├── ./.git/objects/97
+│   │   │   ├── ./.git/objects/97/29822f1ddd39f9fa6433f1687c8768986d1d43
+│   │   │   └── ./.git/objects/97/4a2bb88f9f5ed7587e7541a688269c22e91dd3
+│   │   ├── ./.git/objects/9c
+│   │   │   └── ./.git/objects/9c/bac2527945f0256cade49eb62fb1399363d6d3
+│   │   ├── ./.git/objects/9d
+│   │   │   └── ./.git/objects/9d/a7b2970a0b4cd5d09e312fb272b65ca3f35083
+│   │   ├── ./.git/objects/a7
+│   │   │   └── ./.git/objects/a7/6fa7f03ec983a9b95bc22e76e8b906c3c9d509
+│   │   ├── ./.git/objects/aa
+│   │   │   └── ./.git/objects/aa/ed8788d77837524c61d3d5c4b699e93fee938b
+│   │   ├── ./.git/objects/ac
+│   │   │   └── ./.git/objects/ac/2375cb9c8e8754031224f2f1de26776de39a7f
+│   │   ├── ./.git/objects/b1
+│   │   │   └── ./.git/objects/b1/96c59b16989b6eace67637a4d9ac4160dca89c
+│   │   ├── ./.git/objects/b2
+│   │   │   └── ./.git/objects/b2/f910379ff9b7f07ae9fa128eb02317696b1a3f
+│   │   ├── ./.git/objects/b7
+│   │   │   └── ./.git/objects/b7/350eb94cac12ed57e2420a9dca00b203ebb112
+│   │   ├── ./.git/objects/bb
+│   │   │   └── ./.git/objects/bb/24aa67b2f384d3b4d56829cef12680e19bfee8
+│   │   ├── ./.git/objects/c1
+│   │   │   └── ./.git/objects/c1/f690e0b933178677114a37cd5e49bfb7e0573a
+│   │   ├── ./.git/objects/c4
+│   │   │   └── ./.git/objects/c4/2fce463c319ac22fa8214b982ad020483d352f
+│   │   ├── ./.git/objects/c6
+│   │   │   └── ./.git/objects/c6/468bddbc521ff4d3c4e82338df0955529a79a6
+│   │   ├── ./.git/objects/cb
+│   │   │   └── ./.git/objects/cb/4e845509ff581b0714b9fb75344e0ff53280fd
+│   │   ├── ./.git/objects/cd
+│   │   │   └── ./.git/objects/cd/796bb961bf0a54d92e1b531c23541e016ea5db
+│   │   ├── ./.git/objects/d5
+│   │   │   └── ./.git/objects/d5/aba4f4394c4659c472f4751c44fa33faf6b367
+│   │   ├── ./.git/objects/db
+│   │   │   └── ./.git/objects/db/0600cb7aa2d27c33c6348153f963d9dd1f53c7
+│   │   ├── ./.git/objects/e5
+│   │   │   ├── ./.git/objects/e5/5944a389de129d3c7404cbef81dd63f7775de8
+│   │   │   └── ./.git/objects/e5/cf98bbaf1b1d8652fdeedb98fb98414d80aa68
+│   │   ├── ./.git/objects/e7
+│   │   │   └── ./.git/objects/e7/f579b2cd46c28c51050800bf533344ab84ca22
+│   │   ├── ./.git/objects/f5
+│   │   │   └── ./.git/objects/f5/e977100864a38cb13cdee23111a5f20c405b8e
+│   │   ├── ./.git/objects/ff
+│   │   │   └── ./.git/objects/ff/e29f4d83bc7856717291cbc6b84bb9a192f1aa
+│   │   ├── ./.git/objects/info
+│   │   └── ./.git/objects/pack
+│   ├── ./.git/ORIG_HEAD
+│   └── ./.git/refs
+│       ├── ./.git/refs/heads
+│       │   └── ./.git/refs/heads/master
+│       ├── ./.git/refs/remotes
+│       │   └── ./.git/refs/remotes/origin
+│       │       └── ./.git/refs/remotes/origin/master
+│       └── ./.git/refs/tags
+├── ./ntp_clients.yml
+├── ./ntp_master.yml
+├── ./README.md
+├── ./roles
+│   ├── ./roles/dns_clients
+│   │   ├── ./roles/dns_clients/tasks
+│   │   │   └── ./roles/dns_clients/tasks/main.yml
+│   │   └── ./roles/dns_clients/templates
+│   │       └── ./roles/dns_clients/templates/resolv.conf.j2
+│   ├── ./roles/dns_dynamic
+│   │   ├── ./roles/dns_dynamic/defaults
+│   │   │   └── ./roles/dns_dynamic/defaults/main.yml
+│   │   ├── ./roles/dns_dynamic/handlers
+│   │   │   └── ./roles/dns_dynamic/handlers/main.yml
+│   │   ├── ./roles/dns_dynamic/tasks
+│   │   │   └── ./roles/dns_dynamic/tasks/main.yml
+│   │   └── ./roles/dns_dynamic/templates
+│   │       ├── ./roles/dns_dynamic/templates/db.forward.j2
+│   │       ├── ./roles/dns_dynamic/templates/db.reverse.j2
+│   │       ├── ./roles/dns_dynamic/templates/named.conf.j2
+│   │       └── ./roles/dns_dynamic/templates/named.conf.j2.bak
+│   ├── ./roles/ntp_clients
+│   │   ├── ./roles/ntp_clients/defaults
+│   │   │   └── ./roles/ntp_clients/defaults/main.yml
+│   │   ├── ./roles/ntp_clients/handlers
+│   │   │   └── ./roles/ntp_clients/handlers/main.yml
+│   │   ├── ./roles/ntp_clients/tasks
+│   │   │   └── ./roles/ntp_clients/tasks/main.yml
+│   │   └── ./roles/ntp_clients/templates
+│   │       └── ./roles/ntp_clients/templates/ntp-client.conf.j2
+│   └── ./roles/ntp_master
+│       ├── ./roles/ntp_master/defaults
+│       │   └── ./roles/ntp_master/defaults/main.yml
+│       ├── ./roles/ntp_master/handlers
+│       │   └── ./roles/ntp_master/handlers/main.yml
+│       ├── ./roles/ntp_master/tasks
+│       │   └── ./roles/ntp_master/tasks/main.yml
+│       └── ./roles/ntp_master/templates
+│           └── ./roles/ntp_master/templates/ntp-master.conf.j2
+└── ./.vscode
+    └── ./.vscode/settings.json
+
+</directory_structure>
+
+<content full_path="dns_dynamic.yml">
+---
+- name: Dynamic DNS rebuild using inventory
+  hosts: dns_primary
+  become: yes
+  roles:
+    - dns_dynamic
+
+</content>
+
+<content full_path="dns_clients.yml">
+---
+- name: Install bind-utils on all client servers
+  hosts: all:!dns_primary        # all servers except nds_primary
+  become: yes
+  roles:
+    - dns_clients
+
+</content>
+
+<content full_path="ntp_master.yml">
+---
+- name: Configure NTP master server
+  hosts: ntp_master
+  become: yes
+  roles:
+    - ntp_master
+
+</content>
+
+<content full_path="ntp_clients.yml">
+---
+- name: Configure NTP clients
+  hosts: ntp_clients
+  become: yes
+  roles:
+    - ntp_clients
+
+</content>
+
+<content full_path="README.md">
+My project Documentation
+
+</content>
+
+<content full_path="roles/dns_clients/tasks/main.yml">
+---
+- name: Install bind-utils on client servers
+  yum:
+    name: bind-utils
+    state: present
+    update_cache: yes
+
+- name: Disable SELinux
+  selinux:
+    state: disabled    
+
+- name: Deploy resolv.conf for clients
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+  when: inventory_hostname != "prdx-nsprimary101"
+
+
+</content>
+
+<content full_path="roles/dns_clients/templates/resolv.conf.j2">
+search ziyotek.local
+nameserver 10.0.0.53
+</content>
+
+<content full_path="roles/dns_dynamic/templates/named.conf.j2">
+options {
+    directory "/var/named";
+    listen-on port 53 { any; };           # listen on all IPv4 interfaces
+    listen-on-v6 { none; };               # disable IPv6 to avoid recursion issues
+    recursion yes;                        # enable recursion
+
+allow-recursion { 127.0.0.1; 10.0.0.0/24; };
+allow-query-cache { 127.0.0.1; 10.0.0.0/24; };
+allow-query { 127.0.0.1; 10.0.0.0/24; };
+
+
+    forwarders {
+        8.8.8.8;                           # Google DNS
+        1.1.1.1;                           # Cloudflare DNS
+    };
+    forward only;                          # only use forwarders for external domains
+};
+
+logging {
+    channel default_debug {
+        file "data/named.run";
+        severity dynamic;
+    };
+};
+
+zone "ziyotek.local" IN {
+    type master;
+    file "/var/named/db.forward";
+    allow-transfer { any; };
+};
+
+zone "0.0.10.in-addr.arpa" IN {
+    type master;
+    file "/var/named/db.reverse";
+    allow-transfer { any; };
+};
+
+</content>
+
+<content full_path="roles/dns_dynamic/templates/db.forward.j2">
+$TTL 86400
+@   IN  SOA {{ dns_primary }}. admin.{{ dns_domain }}. (
+    {{ lookup('pipe','date +%Y%m%d%H') }} ; Serial
+    3600 ; Refresh
+    1800 ; Retry
+    604800 ; Expire
+    86400 ) ; Negative Cache TTL
+;
+@       IN  NS  {{ dns_primary }}.
+
+{% for host in groups['all'] %}
+{{ hostvars[host].inventory_hostname }}.{{ dns_domain }}. IN A {{ hostvars[host].ansible_host }}
+{% endfor %}
+
+</content>
+
+<content full_path="roles/dns_dynamic/templates/db.reverse.j2">
+$TTL 86400
+@   IN  SOA {{ dns_primary }}. admin.{{ dns_domain }}. (
+    {{ lookup('pipe','date +%Y%m%d%H') }}
+    3600
+    1800
+    604800
+    86400 )
+;
+@       IN  NS  {{ dns_primary }}.
+
+{% for host in groups['all'] %}
+{{ hostvars[host].ansible_host.split('.')[-1] }} IN PTR {{ hostvars[host].inventory_hostname }}.
+{% endfor %}
+
+</content>
+
+<content full_path="roles/dns_dynamic/templates/named.conf.j2.bak">
+options {
+    directory "/var/named";
+    listen-on port 53 { any; };
+    listen-on-v6 { none; };
+    recursion yes;
+    allow-query-cache { 10.0.0.0/24; };
+    allow-recursion { any; };
+    allow-query { any; };
+
+    forwarders {
+        8.8.8.8;
+        1.1.1.1;
+    };
+    forward only;
+};
+
+zone "ziyotek.local" IN {
+    type master;
+    file "/var/named/db.forward";
+    allow-transfer { any; };
+};
+
+zone "0.0.10.in-addr.arpa" IN {
+    type master;
+    file "/var/named/db.reverse";
+    allow-transfer { any; };
+};
+</content>
+
+<content full_path="roles/dns_dynamic/tasks/main.yml">
+---
+- name: Install BIND
+  yum:
+    name: bind
+    state: present
+
+- name: Ensure named is enabled
+  service:
+    name: named
+    enabled: yes
+    state: started
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Allow DNS in firewall
+  firewalld:
+    service: dns
+    state: enabled
+    permanent: yes
+    immediate: yes
+
+- name: Generate named.conf from template
+  template:
+    src: named.conf.j2
+    dest: /etc/named.conf
+    owner: root
+    group: named
+    mode: '0640'
+    backup: yes
+  notify:
+    - Check named syntax
+    - Check forward zone syntax
+    - Check reverse zone syntax
+    - Restart DNS
+
+- name: Generate forward zone db
+  template:
+    src: db.forward.j2
+    dest: /var/named/db.forward
+    owner: named
+    group: named
+    mode: '0640'
+  notify:
+    - Check forward zone syntax
+    - Restart DNS
+
+- name: Generate reverse zone db
+  template:
+    src: db.reverse.j2
+    dest: /var/named/db.reverse
+    owner: named
+    group: named
+    mode: '0640'
+  notify:
+    - Check reverse zone syntax
+    - Restart DNS
+
+</content>
+
+<content full_path="roles/dns_dynamic/handlers/main.yml">
+---
+- name: Check named syntax
+  command: named-checkconf
+  listen: "Check named syntax"
+
+- name: Check forward zone syntax
+  command: named-checkzone {{ dns_domain }} /var/named/db.forward
+  listen: "Check forward zone syntax"
+
+- name: Check reverse zone syntax
+  command: named-checkzone 0.0.10.in-addr.arpa /var/named/db.reverse
+  listen: "Check reverse zone syntax"
+
+- name: Restart DNS
+  service:
+    name: named
+    state: restarted
+
+</content>
+
+<content full_path="roles/dns_dynamic/defaults/main.yml">
+---
+dns_domain: "ziyotek.local"
+dns_primary: "prdx-nsprimary101"
+
+</content>
+
+<content full_path="roles/ntp_master/defaults/main.yml">
+ntp_pool:
+  - 0.pool.ntp.org iburst
+  - 1.pool.ntp.org iburst
+  - 2.pool.ntp.org iburst
+  - 3.pool.ntp.org iburst
+
+ntp_allow_network: 10.0.0.0/24
+
+</content>
+
+<content full_path="roles/ntp_master/handlers/main.yml">
+- name: restart firewalld
+  service: 
+    name: firewalld
+    state: restarted
+
+- name: restart chronyd
+  systemd:
+    name: chronyd
+    state: restarted    
+</content>
+
+<content full_path="roles/ntp_master/tasks/main.yml">
+- name: Install chrony
+  yum:
+    name: chrony
+    state: present
+
+- name: Deploy NTP master configuration
+  template:
+    src: ntp-master.conf.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart chronyd
+
+- name: Enable NTP service in firewalld
+  firewalld:
+    service: ntp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  notify: restart firewalld
+
+- name: Enable and start chronyd
+  systemd:
+    name: chronyd
+    enabled: yes
+    state: started
+
+</content>
+
+<content full_path="roles/ntp_master/templates/ntp-master.conf.j2">
+# NTP Master
+{% for server in ntp_pool %}
+server {{ server }}
+{% endfor %}
+
+allow {{ ntp_allow_network }}
+local stratum 10
+
+driftfile /var/lib/chrony/drift
+makestep 1.0 3
+rtcsync
+logdir /var/log/chrony
+
+</content>
+
+<content full_path="roles/ntp_clients/defaults/main.yml">
+ntp_master_ip: 10.0.0.51
+ntp_master_hostname: prdx-ntp101
+
+</content>
+
+<content full_path="roles/ntp_clients/handlers/main.yml">
+- name: restart chronyd
+  systemd:
+    name: chronyd
+    state: restarted
+
+</content>
+
+<content full_path="roles/ntp_clients/tasks/main.yml">
+- name: Make yum cache
+  yum:
+    update_cache: yes
+
+- name: Install chrony
+  yum:
+    name: chrony
+    state: present
+
+- name: Deploy NTP client configuration
+  template:
+    src: ntp-client.conf.j2
+    dest: /etc/chrony.conf
+    mode: '0644'
+  notify: restart chronyd
+
+- name: Enable and start chronyd
+  systemd:
+    name: chronyd
+    enabled: yes
+    state: started
+
+</content>
+
+<content full_path="roles/ntp_clients/templates/ntp-client.conf.j2">
+# NTP Client – syncs only from internal master
+server {{ ntp_master_ip }} iburst
+
+driftfile /var/lib/chrony/drift
+makestep 1.0 3
+rtcsync
+logdir /var/log/chrony
+
+</content>
+
+<content full_path=".vscode/settings.json">
+{
+    "ansible.python.interpreterPath": "/usr/bin/python"
+}
+</content>
+
+</repo-to-text>

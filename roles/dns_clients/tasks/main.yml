@@ -8,3 +8,10 @@
 - name: Disable SELinux
   selinux:
     state: disabled    
+
+- name: Deploy resolv.conf for clients
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+  when: inventory_hostname != "prdx-nsprimary101"
+
