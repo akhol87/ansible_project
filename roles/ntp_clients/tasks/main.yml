@@ -9,7 +9,7 @@
 
 - name: Deploy NTP client configuration
   template:
-    src: ntp-client.conf.j2
+    src: chrony.conf.j2
     dest: /etc/chrony.conf
     mode: '0644'
   notify: restart chronyd
@@ -19,3 +19,9 @@
     name: chronyd
     enabled: yes
     state: started
+
+- name: Force initial time step if offset is large
+  command: chronyc -a makestep
+  register: makestep
+  changed_when: "'Frequency' in makestep.stdout"
+

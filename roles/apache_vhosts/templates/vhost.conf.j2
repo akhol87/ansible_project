@@ -1,0 +1,14 @@
+Listen {{ port }}
+
+<VirtualHost *:{{ port }}>
+    DocumentRoot {{ doc_root }}
+    
+    <Directory {{ doc_root }}>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/httpd/vhost_{{ port }}_error.log
+    CustomLog /var/log/httpd/vhost_{{ port }}_access.log combined
+</VirtualHost>

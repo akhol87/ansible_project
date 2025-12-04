@@ -1,0 +1,6 @@
+---
+- name: Configure Apache Virtual Hosts on Load Balancer
+  hosts: load_balancer
+  become: yes
+  roles:
+    - apache_vhosts

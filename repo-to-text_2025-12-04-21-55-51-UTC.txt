@@ -5,6 +5,8 @@ Directory Structure:
 <directory_structure>
 .
 .
+├── ./apache_vhosts.yml
+├── ./copy-yum-repos.yml
 ├── ./dns_clients.yml
 ├── ./dns_dynamic.yml
 ├── ./.git
@@ -42,21 +44,33 @@ Directory Structure:
 │   │               └── ./.git/logs/refs/remotes/origin/master
 │   ├── ./.git/objects
 │   │   ├── ./.git/objects/03
+│   │   │   ├── ./.git/objects/03/55d4d908e1339110525faa93bb0066b7a2063e
 │   │   │   └── ./.git/objects/03/c01ecb11bbdea2cb91cdfd5d8e40c95173de20
+│   │   ├── ./.git/objects/05
+│   │   │   └── ./.git/objects/05/fd118ae2dcb70767f4e1bc615521a6c9c0507c
 │   │   ├── ./.git/objects/06
-│   │   │   └── ./.git/objects/06/361c738064c853e22a9d642ba7622a6a3a25ce
+│   │   │   ├── ./.git/objects/06/361c738064c853e22a9d642ba7622a6a3a25ce
+│   │   │   └── ./.git/objects/06/d5477623e76f9ca9fa588c98ae6b94a7a59115
 │   │   ├── ./.git/objects/0c
 │   │   │   └── ./.git/objects/0c/1952e97bf99358f0da2a13e00de95aa8b892b8
 │   │   ├── ./.git/objects/14
+│   │   │   ├── ./.git/objects/14/afd2f939239f831bf2f19eafab46694045b720
 │   │   │   └── ./.git/objects/14/b649e571e15b7cfcb69295a80caa92f1cc1953
 │   │   ├── ./.git/objects/15
 │   │   │   └── ./.git/objects/15/2f56438a891d99a879eecd009f8421f2dc4080
+│   │   ├── ./.git/objects/1b
+│   │   │   └── ./.git/objects/1b/6e63cdca916910164f9b8d3528abeaed54d911
 │   │   ├── ./.git/objects/26
 │   │   │   └── ./.git/objects/26/0510fd657599bc8fbf975b3040812af36c0413
 │   │   ├── ./.git/objects/36
+│   │   │   ├── ./.git/objects/36/98fbdc02fb1eed24980dc62850d0f52c98acae
 │   │   │   └── ./.git/objects/36/9ef70776acebd4ccc1f43610aa104fb3a45a91
+│   │   ├── ./.git/objects/3b
+│   │   │   └── ./.git/objects/3b/fce31fc3e85cb35fbb30df06cc9fa0412158ff
 │   │   ├── ./.git/objects/3f
 │   │   │   └── ./.git/objects/3f/b880713a38f691c2ee3514bf450ea042b2b3fc
+│   │   ├── ./.git/objects/47
+│   │   │   └── ./.git/objects/47/bacc6d5071914dcd832ad03f280eb6efd627c0
 │   │   ├── ./.git/objects/48
 │   │   │   ├── ./.git/objects/48/9bc0158166ef8578deb5b83072d92980ce83ce
 │   │   │   └── ./.git/objects/48/ddb567d7dd2d390370d71414973f3b1f00d186
@@ -77,9 +91,12 @@ Directory Structure:
 │   │   ├── ./.git/objects/5b
 │   │   │   └── ./.git/objects/5b/68524bf5b1869d80277698ddf46d725ae763d4
 │   │   ├── ./.git/objects/5c
+│   │   │   ├── ./.git/objects/5c/130cecd0441f85d250dc2a66bf755b860c2590
 │   │   │   └── ./.git/objects/5c/8ed5a02190b963dcccb598ba88d20ae1ff4a65
 │   │   ├── ./.git/objects/5f
 │   │   │   └── ./.git/objects/5f/1a9d1366bcc8763dcee309045fe124ebf22b25
+│   │   ├── ./.git/objects/77
+│   │   │   └── ./.git/objects/77/eabe79463e5c871dad4593027b9370d5c28b95
 │   │   ├── ./.git/objects/86
 │   │   │   └── ./.git/objects/86/aba7d5135230dc4757f878536c230e56039b33
 │   │   ├── ./.git/objects/87
@@ -116,9 +133,12 @@ Directory Structure:
 │   │   ├── ./.git/objects/cd
 │   │   │   └── ./.git/objects/cd/796bb961bf0a54d92e1b531c23541e016ea5db
 │   │   ├── ./.git/objects/d5
-│   │   │   └── ./.git/objects/d5/aba4f4394c4659c472f4751c44fa33faf6b367
+│   │   │   ├── ./.git/objects/d5/aba4f4394c4659c472f4751c44fa33faf6b367
+│   │   │   └── ./.git/objects/d5/f21d653c7d110c27f89a0e6c750cb3ee13ccf1
 │   │   ├── ./.git/objects/db
 │   │   │   └── ./.git/objects/db/0600cb7aa2d27c33c6348153f963d9dd1f53c7
+│   │   ├── ./.git/objects/dc
+│   │   │   └── ./.git/objects/dc/4f7d40376438583f47e954190251654f970f86
 │   │   ├── ./.git/objects/e5
 │   │   │   ├── ./.git/objects/e5/5944a389de129d3c7404cbef81dd63f7775de8
 │   │   │   └── ./.git/objects/e5/cf98bbaf1b1d8652fdeedb98fb98414d80aa68
@@ -138,10 +158,22 @@ Directory Structure:
 │       │   └── ./.git/refs/remotes/origin
 │       │       └── ./.git/refs/remotes/origin/master
 │       └── ./.git/refs/tags
+├── ./haproxy.yml
 ├── ./ntp_clients.yml
 ├── ./ntp_master.yml
 ├── ./README.md
+├── ./repo-to-text_2025-12-03-03-52-36-UTC.txt
 ├── ./roles
+│   ├── ./roles/apache_vhosts
+│   │   ├── ./roles/apache_vhosts/defaults
+│   │   │   └── ./roles/apache_vhosts/defaults/main.yml
+│   │   ├── ./roles/apache_vhosts/handlers
+│   │   │   └── ./roles/apache_vhosts/handlers/main.yml
+│   │   ├── ./roles/apache_vhosts/tasks
+│   │   │   └── ./roles/apache_vhosts/tasks/main.yml
+│   │   └── ./roles/apache_vhosts/templates
+│   │       ├── ./roles/apache_vhosts/templates/index.html.j2
+│   │       └── ./roles/apache_vhosts/templates/vhost.conf.j2
 │   ├── ./roles/dns_clients
 │   │   ├── ./roles/dns_clients/tasks
 │   │   │   └── ./roles/dns_clients/tasks/main.yml
@@ -159,6 +191,13 @@ Directory Structure:
 │   │       ├── ./roles/dns_dynamic/templates/db.reverse.j2
 │   │       ├── ./roles/dns_dynamic/templates/named.conf.j2
 │   │       └── ./roles/dns_dynamic/templates/named.conf.j2.bak
+│   ├── ./roles/haproxy_lb
+│   │   ├── ./roles/haproxy_lb/handlers
+│   │   │   └── ./roles/haproxy_lb/handlers/main.yml
+│   │   ├── ./roles/haproxy_lb/tasks
+│   │   │   └── ./roles/haproxy_lb/tasks/main.yml
+│   │   └── ./roles/haproxy_lb/templates
+│   │       └── ./roles/haproxy_lb/templates/haproxy.cfg.j2
 │   ├── ./roles/ntp_clients
 │   │   ├── ./roles/ntp_clients/defaults
 │   │   │   └── ./roles/ntp_clients/defaults/main.yml
@@ -167,7 +206,7 @@ Directory Structure:
 │   │   ├── ./roles/ntp_clients/tasks
 │   │   │   └── ./roles/ntp_clients/tasks/main.yml
 │   │   └── ./roles/ntp_clients/templates
-│   │       └── ./roles/ntp_clients/templates/ntp-client.conf.j2
+│   │       └── ./roles/ntp_clients/templates/chrony.conf.j2
 │   └── ./roles/ntp_master
 │       ├── ./roles/ntp_master/defaults
 │       │   └── ./roles/ntp_master/defaults/main.yml
@@ -224,6 +263,60 @@ Directory Structure:
 
 <content full_path="README.md">
 My project Documentation
+
+</content>
+
+<content full_path="apache_vhosts.yml">
+---
+- name: Configure Apache Virtual Hosts on Load Balancer
+  hosts: load_balancer
+  become: yes
+  roles:
+    - apache_vhosts
+</content>
+
+<content full_path="haproxy.yml">
+---
+- name: Configure HAProxy Load Balancer
+  hosts: load_balancer
+  become: yes
+  roles:
+    - haproxy_lb
+</content>
+
+<content full_path="copy-yum-repos.yml">
+---
+- name: Ensure rsync is installed on prdx-ntp101
+  hosts: prdx-ntp101
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Install rsync package
+      dnf:
+        name: rsync
+        state: present
+
+
+- name: Copy yum.repos.d from prdx-ntp101 to all servers
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Copy yum.repos.d directory using rsync from prdx-ntp101
+      synchronize:
+        src: /etc/yum.repos.d/
+        dest: /etc/yum.repos.d/
+        delete: no
+        recursive: yes
+        mode: pull
+      delegate_to: prdx-ntp101
+      when: inventory_hostname not in [
+              'prdx-ansible101',
+              'prdx-nsprimary101',
+              'prdx-db101'
+            ]
 
 </content>
 
@@ -449,10 +542,8 @@ dns_primary: "prdx-nsprimary101"
 
 <content full_path="roles/ntp_master/defaults/main.yml">
 ntp_pool:
-  - 0.pool.ntp.org iburst
-  - 1.pool.ntp.org iburst
-  - 2.pool.ntp.org iburst
-  - 3.pool.ntp.org iburst
+  - server time.google.com iburst
+  - server time.cloudflare.com iburst
 
 ntp_allow_network: 10.0.0.0/24
 
@@ -543,7 +634,7 @@ ntp_master_hostname: prdx-ntp101
 
 - name: Deploy NTP client configuration
   template:
-    src: ntp-client.conf.j2
+    src: chrony.conf.j2
     dest: /etc/chrony.conf
     mode: '0644'
   notify: restart chronyd
@@ -554,9 +645,15 @@ ntp_master_hostname: prdx-ntp101
     enabled: yes
     state: started
 
+- name: Force initial time step if offset is large
+  command: chronyc -a makestep
+  register: makestep
+  changed_when: "'Frequency' in makestep.stdout"
+
+
 </content>
 
-<content full_path="roles/ntp_clients/templates/ntp-client.conf.j2">
+<content full_path="roles/ntp_clients/templates/chrony.conf.j2">
 # NTP Client – syncs only from internal master
 server {{ ntp_master_ip }} iburst
 
@@ -564,6 +661,416 @@ driftfile /var/lib/chrony/drift
 makestep 1.0 3
 rtcsync
 logdir /var/log/chrony
+
+</content>
+
+<content full_path="roles/apache_vhosts/defaults/main.yml">
+---
+bambi_image_url: "https://wallscloud.net/img/resize/1600/1200/MM/2016-09-25-disney-bambi-movie-kJJ.jpg"
+</content>
+
+<content full_path="roles/apache_vhosts/handlers/main.yml">
+---
+- name: restart httpd
+  systemd:
+    name: httpd
+    state: restarted
+
+- name: restart firewalld
+  systemd:
+    name: firewalld
+    state: restarted
+</content>
+
+<content full_path="roles/apache_vhosts/tasks/main.yml">
+---
+- name: Install Apache (httpd)
+  yum:
+    name: httpd
+    state: present
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Create directories for virtual hosts
+  file:
+    path: "/var/www/vhost{{ item }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: '0755'
+  loop:
+    - 1
+    - 2
+    - 3
+
+- name: Download Bambi image for each virtual host
+  get_url:
+    url: "{{ bambi_image_url }}"
+    dest: "/var/www/vhost{{ item }}/bambi.jpg"
+    owner: apache
+    group: apache
+    mode: '0644'
+  loop:
+    - 1
+    - 2
+    - 3
+
+- name: Deploy index.html for Virtual Host 1
+  template:
+    src: index.html.j2
+    dest: /var/www/vhost1/index.html
+    owner: apache
+    group: apache
+    mode: '0644'
+  vars:
+    page_number: 1
+
+- name: Deploy index.html for Virtual Host 2
+  template:
+    src: index.html.j2
+    dest: /var/www/vhost2/index.html
+    owner: apache
+    group: apache
+    mode: '0644'
+  vars:
+    page_number: 2
+
+- name: Deploy index.html for Virtual Host 3
+  template:
+    src: index.html.j2
+    dest: /var/www/vhost3/index.html
+    owner: apache
+    group: apache
+    mode: '0644'
+  vars:
+    page_number: 3
+
+- name: Configure Virtual Host 1 (Port 7000)
+  template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/vhost1.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    port: 7000
+    doc_root: /var/www/vhost1
+  notify: restart httpd
+
+- name: Configure Virtual Host 2 (Port 8000)
+  template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/vhost2.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    port: 8000
+    doc_root: /var/www/vhost2
+  notify: restart httpd
+
+- name: Configure Virtual Host 3 (Port 9000)
+  template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/vhost3.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    port: 9000
+    doc_root: /var/www/vhost3
+  notify: restart httpd
+
+- name: Allow ports 7000, 8000, 9000 in firewalld
+  firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop:
+    - 7000
+    - 8000
+    - 9000
+  notify: restart firewalld
+
+- name: Enable and start httpd
+  systemd:
+    name: httpd
+    enabled: yes
+    state: started
+</content>
+
+<content full_path="roles/apache_vhosts/templates/vhost.conf.j2">
+Listen {{ port }}
+
+<VirtualHost *:{{ port }}>
+    DocumentRoot {{ doc_root }}
+    
+    <Directory {{ doc_root }}>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/httpd/vhost_{{ port }}_error.log
+    CustomLog /var/log/httpd/vhost_{{ port }}_access.log combined
+</VirtualHost>
+</content>
+
+<content full_path="roles/apache_vhosts/templates/index.html.j2">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page {{ page_number }} - Load Balancer Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 900px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 2em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .server-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .server-info p {
+            color: #555;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        
+        .server-info strong {
+            color: #333;
+        }
+        
+        .image-container {
+            margin-top: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .refresh-hint {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Load Balancer Demo</h1>
+        
+        <div class="page-number">
+            Page {{ page_number }}
+        </div>
+        
+        <div class="server-info">
+            <p><strong>Server:</strong> {{ ansible_hostname }}</p>
+            <p><strong>IP Address:</strong> {{ ansible_default_ipv4.address }}</p>
+            <p><strong>Backend Port:</strong> {{ 7000 if page_number == 1 else (8000 if page_number == 2 else 9000) }}</p>
+        </div>
+        
+        <div class="refresh-hint">
+            🔄 Refresh this page multiple times to see the load balancer in action!
+        </div>
+        
+        <div class="image-container">
+            <img src="bambi.jpg" alt="Bambi - Disney">
+        </div>
+        
+        <div class="footer">
+            <p>Powered by Apache & HAProxy | Ziyotek Infrastructure</p>
+        </div>
+    </div>
+</body>
+</html>
+</content>
+
+<content full_path="roles/haproxy_lb/handlers/main.yml">
+---
+- name: restart haproxy
+  systemd:
+    name: haproxy
+    state: restarted
+
+- name: restart firewalld
+  systemd:
+    name: firewalld
+    state: restarted
+</content>
+
+<content full_path="roles/haproxy_lb/tasks/main.yml">
+---
+- name: Install HAProxy
+  yum:
+    name: haproxy
+    state: present
+
+- name: Deploy HAProxy configuration
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  notify: restart haproxy
+
+- name: Allow HTTP (port 80) in firewalld
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
+  notify: restart firewalld
+
+- name: Allow HAProxy stats page (port 8404) in firewalld
+  firewalld:
+    port: 8404/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  notify: restart firewalld
+
+- name: Enable and start HAProxy
+  systemd:
+    name: haproxy
+    enabled: yes
+    state: started
+</content>
+
+<content full_path="roles/haproxy_lb/templates/haproxy.cfg.j2">
+#---------------------------------------------------------------------
+# Global settings
+#---------------------------------------------------------------------
+global
+    log         127.0.0.1 local2
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# Default settings
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 3000
+
+#---------------------------------------------------------------------
+# HAProxy Statistics Page
+#---------------------------------------------------------------------
+listen stats
+    bind *:8404
+    stats enable
+    stats uri /
+    stats refresh 5s
+    stats show-legends
+    stats show-node
+
+#---------------------------------------------------------------------
+# Frontend - Accepts incoming HTTP requests
+#---------------------------------------------------------------------
+frontend http_front
+    bind *:80
+    default_backend apache_backend
+    
+    # Add custom header to show which backend server responded
+    http-response set-header X-Backend-Server %s
+
+#---------------------------------------------------------------------
+# Backend - Apache Virtual Hosts (Round Robin Load Balancing)
+#---------------------------------------------------------------------
+backend apache_backend
+    balance roundrobin
+    option httpchk GET /
+    
+    # Backend servers (all on localhost with different ports)
+    server vhost1 127.0.0.1:7000 check
+    server vhost2 127.0.0.1:8000 check
+    server vhost3 127.0.0.1:9000 check
+
+    
 
 </content>
 

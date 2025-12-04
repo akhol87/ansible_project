@@ -1,0 +1,117 @@
+---
+- name: Install Apache (httpd)
+  yum:
+    name: httpd
+    state: present
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Create directories for virtual hosts
+  file:
+    path: "/var/www/vhost{{ item }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: '0755'
+  loop:
+    - 1
+    - 2
+    - 3
+
+- name: Download Bambi image for each virtual host
+  get_url:
+    url: "{{ bambi_image_url }}"
+    dest: "/var/www/vhost{{ item }}/bambi.jpg"
+    owner: apache
+    group: apache
+    mode: '0644'
+  loop:
+    - 1
+    - 2
+    - 3
+
+- name: Deploy index.html for Virtual Host 1
+  template:
+    src: index.html.j2
+    dest: /var/www/vhost1/index.html
+    owner: apache
+    group: apache
+    mode: '0644'
+  vars:
+    page_number: 1
+
+- name: Deploy index.html for Virtual Host 2
+  template:
+    src: index.html.j2
+    dest: /var/www/vhost2/index.html
+    owner: apache
+    group: apache
+    mode: '0644'
+  vars:
+    page_number: 2
+
+- name: Deploy index.html for Virtual Host 3
+  template:
+    src: index.html.j2
+    dest: /var/www/vhost3/index.html
+    owner: apache
+    group: apache
+    mode: '0644'
+  vars:
+    page_number: 3
+
+- name: Configure Virtual Host 1 (Port 7000)
+  template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/vhost1.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    port: 7000
+    doc_root: /var/www/vhost1
+  notify: restart httpd
+
+- name: Configure Virtual Host 2 (Port 8000)
+  template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/vhost2.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    port: 8000
+    doc_root: /var/www/vhost2
+  notify: restart httpd
+
+- name: Configure Virtual Host 3 (Port 9000)
+  template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/vhost3.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    port: 9000
+    doc_root: /var/www/vhost3
+  notify: restart httpd
+
+- name: Allow ports 7000, 8000, 9000 in firewalld
+  firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop:
+    - 7000
+    - 8000
+    - 9000
+  notify: restart firewalld
+
+- name: Enable and start httpd
+  systemd:
+    name: httpd
+    enabled: yes
+    state: started

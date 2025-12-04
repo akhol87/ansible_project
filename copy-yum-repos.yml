@@ -1,0 +1,32 @@
+---
+- name: Ensure rsync is installed on prdx-ntp101
+  hosts: prdx-ntp101
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Install rsync package
+      dnf:
+        name: rsync
+        state: present
+
+
+- name: Copy yum.repos.d from prdx-ntp101 to all servers
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Copy yum.repos.d directory using rsync from prdx-ntp101
+      synchronize:
+        src: /etc/yum.repos.d/
+        dest: /etc/yum.repos.d/
+        delete: no
+        recursive: yes
+        mode: pull
+      delegate_to: prdx-ntp101
+      when: inventory_hostname not in [
+              'prdx-ansible101',
+              'prdx-nsprimary101',
+              'prdx-db101'
+            ]
