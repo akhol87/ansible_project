@@ -1,0 +1,98 @@
+---
+- name: Install MariaDB packages
+  yum:
+    name:
+      - mariadb-server
+      - mariadb
+      - python3-PyMySQL
+    state: present
+  become: yes
+
+- name: Enable and start MariaDB
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Install EPEL repo
+  yum:
+    name: epel-release
+    state: present
+  become: yes
+
+- name: Install phpMyAdmin
+  yum:
+    name: phpMyAdmin-5.2.3-1.el9.noarch
+    state: present
+  become: yes
+
+- name: Deploy phpMyAdmin config
+  template:
+    src: phpmyadmin.conf.j2
+    dest: /etc/httpd/conf.d/phpMyAdmin.conf
+  notify: restart apache
+  become: yes
+
+- name: Ensure Apache started
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Ensure firewall allows MySQL and HTTP(S)
+  firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop:
+    - mysql
+    - http
+    - https
+  become: yes
+
+- name: Create MySQL user akhol
+  community.mysql.mysql_user:
+    name: akhol
+    password: "password"
+    host: "%"
+    priv: "air_travel.*:ALL"
+    state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock  # this allows root user to login without password
+
+- name: Create air_travel database using akhol
+  community.mysql.mysql_db:
+    name: air_travel
+    state: present
+    login_user: akhol
+    login_password: "password"
+
+- name: Create flights table using akhol
+  community.mysql.mysql_query:
+    login_user: akhol
+    login_password: "password"
+    login_db: air_travel    # вместо db
+    query: |
+      CREATE TABLE IF NOT EXISTS flights (
+        airline_name VARCHAR(50),
+        stops INT,
+        duration VARCHAR(20),
+        price_usd DECIMAL(10,2)
+      );
+
+
+- name: Insert data into flights using akhol
+  community.mysql.mysql_query:
+    login_user: akhol
+    login_password: "password"
+    login_db: air_travel    # <- заменили db на login_db
+    query: |
+      INSERT INTO flights (airline_name, stops, duration, price_usd) VALUES
+      ("Uzbekistan Airways", 0, "12h 45m", 750.00),
+      ("Aeroflot", 1, "15h 30m", 620.50),
+      ("Turkish Airlines", 1, "20h 15m", 580.99),
+      ("Emirates", 2, "35h 35m", 825.00),
+      ("Amirates Airways", 2, "35h 35m", 825.00);
+

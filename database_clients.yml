@@ -1,0 +1,19 @@
+---
+- name: Install database client tools
+  hosts: db_clients
+  become: yes
+  tasks:
+    - name: Install MariaDB client
+      yum:
+        name: mariadb
+        state: present
+
+    - name: Test connection to air_travel database
+      command: >
+        mysql -h prdx-db101 -u akhol -ppassword -e "SHOW DATABASES;"
+      register: db_test
+      changed_when: false
+      no_log: true   # to hide password
+
+    - debug:
+        msg: "DB responded: {{ db_test.stdout }}"

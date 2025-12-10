@@ -1,0 +1,6 @@
+---
+- name: Configure Database Server
+  hosts: db_server
+  become: yes
+  roles:
+    - air_travel_db
