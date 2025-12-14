@@ -1,0 +1,16 @@
+---
+- name: Configure FTP Server
+  hosts: ftp_server
+  become: yes
+  roles:
+    - ftp
+
+  post_tasks:
+    - name: Display FTP server information
+      debug:
+        msg:
+          - "FTP Server configured successfully!"
+          - "Server IP: {{ ansible_default_ipv4.address }}"
+          - "FTP Users: {{ ftp_users | map(attribute='username') | list }}"
+          - "Anonymous access: {{ ftp_anonymous_enable }}"
+          - "Passive ports: {{ ftp_pasv_min_port }}-{{ ftp_pasv_max_port }}"

@@ -1,5 +1,5 @@
 - name: Install chrony
-  yum:
+  ansible.builtin.dnf:
     name: chrony
     state: present
 
@@ -25,3 +25,4 @@
     name: chronyd
     enabled: yes
     state: started
+

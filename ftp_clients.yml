@@ -1,0 +1,9 @@
+---
+- name: Install FTP client on all hosts except FTP server
+  hosts: all:!ftp_server
+  become: yes
+  tasks:
+    - name: Install FTP client
+      yum:
+        name: ftp
+        state: present

@@ -1,0 +1,4 @@
+nfs_export_dir: /var/nfs/shared
+nfs_autofs_dir: /var/nfs/autofs
+nfs_mount_point: /clientshare
+nfs_server: prdx-nfs101

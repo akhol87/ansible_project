@@ -1,0 +1,124 @@
+---
+- name: Install vsftpd package
+  yum:
+    name: vsftpd
+    state: present
+  become: yes
+
+- name: Create FTP users
+  user:
+    name: "{{ item.username }}"
+    home: "{{ item.home }}"
+    shell: /bin/bash
+    state: present
+    create_home: yes
+  loop: "{{ ftp_users }}"
+  become: yes
+  when: ftp_users is defined
+
+- name: Set FTP user passwords
+  shell: echo "{{ item.username }}:{{ item.password }}" | chpasswd
+  loop: "{{ ftp_users }}"
+  become: yes
+  when: ftp_users is defined
+  no_log: true
+
+- name: Add FTP users to allowed user list
+  lineinfile:
+    path: /etc/vsftpd/user_list
+    line: "{{ item.username }}"
+    create: yes
+  loop: "{{ ftp_users }}"
+  become: yes
+  when: ftp_users is defined
+  notify: restart vsftpd
+
+- name: Create uploads directory for FTP users
+  file:
+    path: "{{ item.home }}/uploads"
+    state: directory
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0755'
+  loop: "{{ ftp_users }}"
+  become: yes
+  when: ftp_users is defined
+
+- name: Create welcome file for each FTP user
+  copy:
+    content: |
+      ==========================================
+      Welcome to {{ ansible_hostname }} FTP Server
+      ==========================================
+      User: {{ item.username }}
+      Home Directory: {{ item.home }}
+      Date: {{ ansible_date_time.iso8601 }}
+      
+      Available commands:
+      - ls         : List files
+      - pwd        : Show current directory
+      - cd dir     : Change directory
+      - put file   : Upload file
+      - get file   : Download file
+      - mkdir dir  : Create directory
+      - delete file: Delete file
+      ==========================================
+    dest: "{{ item.home }}/welcome.txt"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0644'
+  loop: "{{ ftp_users }}"
+  become: yes
+  when: ftp_users is defined
+
+- name: Create sample files for testing
+  copy:
+    content: "Sample file for {{ item.username }} - Created on {{ ansible_date_time.iso8601 }}"
+    dest: "{{ item.home }}/sample_file.txt"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: '0644'
+  loop: "{{ ftp_users }}"
+  become: yes
+  when: ftp_users is defined
+
+- name: Deploy vsftpd configuration
+  template:
+    src: vsftpd.conf.j2
+    dest: /etc/vsftpd/vsftpd.conf
+    owner: root
+    group: root
+    mode: '0600'
+    backup: yes
+  become: yes
+  notify: restart vsftpd
+
+- name: Open FTP ports in firewall
+  firewalld:
+    service: ftp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  become: yes
+  ignore_errors: yes
+
+- name: Open passive mode ports in firewall
+  firewalld:
+    port: "{{ ftp_pasv_min_port }}-{{ ftp_pasv_max_port }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  become: yes
+  ignore_errors: yes
+
+- name: Reload firewall
+  command: firewall-cmd --reload
+  become: yes
+  ignore_errors: yes
+
+- name: Enable and start vsftpd service
+  systemd:
+    name: vsftpd
+    enabled: true
+    state: started
+  become: yes

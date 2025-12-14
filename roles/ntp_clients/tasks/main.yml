@@ -1,9 +1,5 @@
-- name: Make yum cache
-  yum:
-    update_cache: yes
-
 - name: Install chrony
-  yum:
+  ansible.builtin.dnf:
     name: chrony
     state: present
 
@@ -13,15 +9,15 @@
     dest: /etc/chrony.conf
     mode: '0644'
   notify: restart chronyd
+  become: yes
 
 - name: Enable and start chronyd
   systemd:
     name: chronyd
     enabled: yes
     state: started
+  become: yes
 
-- name: Force initial time step if offset is large
-  command: chronyc -a makestep
-  register: makestep
-  changed_when: "'Frequency' in makestep.stdout"
-
+- name: Force time sync
+  command: chronyc makestep
+  become: yes

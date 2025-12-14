@@ -1,0 +1,130 @@
+---
+- name: Install NFS server packages 
+  yum:
+    name:
+      - nfs-utils
+    state: present
+  when: inventory_hostname in groups['nfs_server']
+  become: yes
+
+- name: Ensure shared directories exist 
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0777"
+  loop:
+    - /var/nfs/shared
+    - /var/nfs/autofs
+  when: inventory_hostname in groups['nfs_server']
+  become: yes
+
+- name: Configure /etc/exports 
+  template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: "0644"
+  when: inventory_hostname in groups['nfs_server']
+  notify: restart nfs
+  become: yes
+
+- name: Enable & start NFS services 
+  systemd:
+    name: nfs-server
+    enabled: true
+    state: started
+  when: inventory_hostname in groups['nfs_server']
+  become: yes
+
+- name: Open NFS ports in firewall
+  firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop:
+    - nfs
+    - rpc-bind
+    - mountd
+  when: inventory_hostname in groups['nfs_server']
+  become: yes
+  ignore_errors: yes  # In case firewalld is not running
+
+- name: Reload firewall
+  command: firewall-cmd --reload
+  when: inventory_hostname in groups['nfs_server']
+  become: yes
+  ignore_errors: yes
+
+# ------------------- CLIENT SIDE -------------------
+
+- name: Install NFS utils on clients
+  yum:
+    name: nfs-utils
+    state: present
+  when: inventory_hostname in groups['nfs_clients']
+  become: yes
+
+- name: Create mount point on clients
+  file:
+    path: "{{ nfs_mount_point }}"
+    state: directory
+    mode: "0777"
+  when: inventory_hostname in groups['nfs_clients']
+  become: yes
+
+- name: Wait until NFS server is responding (clients only)
+  wait_for:
+    host: "{{ groups['nfs_server'][0] }}"
+    port: 2049
+    timeout: 30
+  when: inventory_hostname in groups['nfs_clients']
+
+- name: Mount NFS share on clients
+  mount:
+    src: "{{ groups['nfs_server'][0] }}:/var/nfs/shared"
+    path: "{{ nfs_mount_point }}"
+    state: mounted
+    fstype: nfs
+  when: inventory_hostname in groups['nfs_clients']
+  become: yes
+
+# ------------------- AUTOFS CLIENT CONFIGURATION -------------------
+- name: Install autofs on clients
+  yum:
+    name: autofs
+    state: present
+  when: inventory_hostname in groups['nfs_clients']
+  become: yes
+
+- name: Configure /etc/auto.master
+  lineinfile:
+    path: /etc/auto.master
+    line: "/autoshare /etc/auto.nfs --timeout=60"
+    create: yes
+  when: inventory_hostname in groups['nfs_clients']
+  notify: restart autofs
+  become: yes
+
+- name: Create /etc/auto.nfs map file
+  template:
+    src: auto.nfs.j2
+    dest: /etc/auto.nfs
+    owner: root
+    group: root
+    mode: "0644"
+  when: inventory_hostname in groups['nfs_clients']
+  notify: restart autofs
+  become: yes
+
+- name: Enable and start autofs
+  systemd:
+    name: autofs
+    enabled: true
+    state: started
+  when: inventory_hostname in groups['nfs_clients']
+  become: yes
+

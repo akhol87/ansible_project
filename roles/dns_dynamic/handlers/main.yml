@@ -1,17 +1,24 @@
 ---
 - name: Check named syntax
   command: named-checkconf
+  register: named_conf_check
+  failed_when: named_conf_check.rc != 0
   listen: "Check named syntax"
 
 - name: Check forward zone syntax
   command: named-checkzone {{ dns_domain }} /var/named/db.forward
+  register: forward_zone_check
+  failed_when: forward_zone_check.rc != 0
   listen: "Check forward zone syntax"
 
 - name: Check reverse zone syntax
   command: named-checkzone 0.0.10.in-addr.arpa /var/named/db.reverse
+  register: reverse_zone_check
+  failed_when: reverse_zone_check.rc != 0
   listen: "Check reverse zone syntax"
 
 - name: Restart DNS
   service:
     name: named
     state: restarted
+  listen: "Restart DNS"

@@ -1,0 +1,28 @@
+---
+# Docker installation
+docker_edition: 'ce'
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-compose-plugin
+
+# Docker service
+docker_service_enabled: true
+docker_service_state: started
+
+# Docker Swarm
+docker_swarm_port: 2377
+docker_swarm_advertise_addr: "{{ ansible_default_ipv4.address }}"
+
+# Application settings
+app_name: "webapp"
+app_image_name: "webapp-php"
+app_replicas: 3
+app_port: 80
+app_download_url: "https://aws-tc-largeobjects.s3-us-west-2.amazonaws.com/CUR-TF-200-ACACAD/studentdownload/lab-app.tgz"
+app_archive: "lab-app.tgz"
+
+# Docker registry (optional - for custom images)
+docker_registry_enabled: false
+docker_registry_url: ""

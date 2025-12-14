@@ -1,0 +1,104 @@
+---
+- name: Create working directory
+  file:
+    path: /tmp/webapp-build
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Download application archive
+  get_url:
+    url: "{{ app_download_url }}"
+    dest: "/tmp/{{ app_archive }}"
+    mode: '0644'
+  become: yes
+
+- name: Extract application files
+  unarchive:
+    src: "/tmp/{{ app_archive }}"
+    dest: /tmp/webapp-build/
+    remote_src: yes
+  become: yes
+
+- name: Create Dockerfile
+  template:
+    src: Dockerfile.j2
+    dest: /tmp/webapp-build/Dockerfile
+    mode: '0644'
+  become: yes
+
+- name: Build Docker image
+  docker_image:
+    name: "{{ app_image_name }}"
+    tag: latest
+    source: build
+    build:
+      path: /tmp/webapp-build
+      pull: yes
+    state: present
+  become: yes
+
+- name: Create overlay network for application
+  docker_network:
+    name: webapp-network
+    driver: overlay
+    attachable: yes
+  become: yes
+
+- name: Deploy application stack
+  docker_stack:
+    name: "{{ app_name }}"
+    compose:
+      - version: '3.8'
+        services:
+          web:
+            image: "{{ app_image_name }}:latest"
+            deploy:
+              replicas: "{{ app_replicas }}"
+              restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+              placement:
+                constraints:
+                  - node.role == worker
+              update_config:
+                parallelism: 1
+                delay: 10s
+            ports:
+              - "{{ app_port }}:80"
+            networks:
+              - webapp-network
+            healthcheck:
+              test: ["CMD", "curl", "-f", "http://localhost/"]
+              interval: 30s
+              timeout: 10s
+              retries: 3
+        networks:
+          webapp-network:
+            external: true
+  become: yes
+
+- name: Wait for services to be ready
+  pause:
+    seconds: 15
+
+- name: Get service status
+  command: docker service ls
+  register: service_status
+  become: yes
+  changed_when: false
+
+- name: Display service status
+  debug:
+    var: service_status.stdout_lines
+
+- name: Get stack services
+  command: "docker stack services {{ app_name }}"
+  register: stack_services
+  become: yes
+  changed_when: false
+
+- name: Display stack services
+  debug:
+    var: stack_services.stdout_lines

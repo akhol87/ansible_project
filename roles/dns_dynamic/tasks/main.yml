@@ -1,6 +1,6 @@
 ---
 - name: Install BIND
-  yum:
+  ansible.builtin.dnf:
     name: bind
     state: present
 
@@ -13,6 +13,7 @@
 - name: Disable SELinux
   selinux:
     state: disabled
+  register: selinux_status
 
 - name: Allow DNS in firewall
   firewalld:
@@ -29,10 +30,8 @@
     group: named
     mode: '0640'
     backup: yes
+    validate: 'named-checkconf %s'
   notify:
-    - Check named syntax
-    - Check forward zone syntax
-    - Check reverse zone syntax
     - Restart DNS
 
 - name: Generate forward zone db

@@ -1,13 +1,12 @@
 $TTL 86400
-@   IN  SOA {{ dns_primary }}. admin.{{ dns_domain }}. (
-    {{ lookup('pipe','date +%Y%m%d%H') }}
-    3600
-    1800
-    604800
-    86400 )
+@   IN  SOA {{ dns_primary }}.{{ dns_domain }}. admin.{{ dns_domain }}. (
+    {{ lookup('pipe','date +%Y%m%d%H') }} ; Serial
+    3600       ; Refresh
+    1800       ; Retry
+    604800     ; Expire
+    86400 )    ; Negative Cache TTL
 ;
-@       IN  NS  {{ dns_primary }}.
-
+@       IN  NS  {{ dns_primary }}.{{ dns_domain }}.
 {% for host in groups['all'] %}
-{{ hostvars[host].ansible_host.split('.')[-1] }} IN PTR {{ hostvars[host].inventory_hostname }}.
+{{ hostvars[host].ansible_host.split('.')[-1] }}     IN  PTR {{ hostvars[host].inventory_hostname }}.{{ dns_domain }}.
 {% endfor %}

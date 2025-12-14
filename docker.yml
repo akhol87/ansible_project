@@ -1,0 +1,50 @@
+---
+- name: Setup Docker Swarm Cluster
+  hosts: docker_swarm
+  become: yes
+  roles:
+    - docker
+
+  post_tasks:
+    - name: Display cluster information (Manager only)
+      block:
+        - name: Get node list
+          command: docker node ls
+          register: node_list
+          changed_when: false
+
+        - name: Display nodes
+          debug:
+            msg: "{{ node_list.stdout_lines }}"
+
+        - name: Get service list
+          command: docker service ls
+          register: service_list
+          changed_when: false
+
+        - name: Display services
+          debug:
+            msg: "{{ service_list.stdout_lines }}"
+
+        - name: Get service details
+          command: "docker service ps {{ app_name }}_web"
+          register: service_details
+          changed_when: false
+
+        - name: Display service replica details
+          debug:
+            msg: "{{ service_details.stdout_lines }}"
+
+        - name: Display cluster health summary
+          debug:
+            msg:
+              - "=================================="
+              - "Docker Swarm Cluster Health"
+              - "=================================="
+              - "Manager: {{ inventory_hostname }}"
+              - "Workers: {{ groups['docker_swarm_workers'] | join(', ') }}"
+              - "Application: {{ app_name }}"
+              - "Replicas: {{ app_replicas }}"
+              - "Port: {{ app_port }}"
+              - "=================================="
+      when: inventory_hostname in groups['docker_swarm_manager']

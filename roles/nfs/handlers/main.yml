@@ -1,0 +1,21 @@
+---
+- name: restart nfs
+  service:
+    name: nfs-server
+    state: restarted
+    enabled: yes
+  become: yes
+
+- name: restart nfs
+  service:
+    name: nfs-server
+    state: restarted
+    enabled: yes
+  become: yes
+
+- name: restart autofs
+  service:
+    name: autofs
+    state: restarted
+    enabled: yes
+  become: yes

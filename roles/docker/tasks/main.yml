@@ -1,0 +1,10 @@
+---
+- name: Include installation tasks
+  include_tasks: install.yml
+
+- name: Include swarm setup tasks
+  include_tasks: swarm.yml
+
+- name: Include deployment tasks
+  include_tasks: deploy.yml
+  when: inventory_hostname in groups['docker_swarm_manager']

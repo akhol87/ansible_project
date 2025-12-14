@@ -1,0 +1,32 @@
+FROM rockylinux:9
+
+# Install Apache, PHP, MySQL client
+RUN dnf install -y epel-release && \
+    dnf install -y httpd php php-mysqlnd mariadb && \
+    dnf clean all
+
+# Copy application files
+COPY lab-app /var/www/html/
+
+# Set proper ownership
+RUN chown -R apache:apache /var/www/html/ && \
+    chmod -R 755 /var/www/html/
+
+# Set specific file ownership as required
+RUN if [ -f /var/www/html/rds.conf.php ]; then \
+        chown apache:root /var/www/html/rds.conf.php; \
+    fi
+
+# Configure Apache
+RUN sed -i 's/Listen 80/Listen 80/' /etc/httpd/conf/httpd.conf && \
+    echo "ServerName localhost" >> /etc/httpd/conf/httpd.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost/ || exit 1
+
+# Start Apache in foreground
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]

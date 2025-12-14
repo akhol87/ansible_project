@@ -1,0 +1,39 @@
+---
+# FTP Server Configuration
+ftp_anonymous_enable: false
+ftp_local_enable: true
+ftp_write_enable: true
+ftp_local_umask: 022
+ftp_dirmessage_enable: true
+ftp_xferlog_enable: true
+ftp_connect_from_port_20: true
+ftp_xferlog_std_format: true
+ftp_listen: true
+ftp_pam_service_name: vsftpd
+ftp_userlist_enable: true
+ftp_tcp_wrappers: true
+
+# Passive mode settings
+ftp_pasv_enable: true
+ftp_pasv_min_port: 30000
+ftp_pasv_max_port: 31000
+
+# Chroot settings (lock users to their home directory)
+ftp_chroot_local_user: true
+ftp_allow_writeable_chroot: true
+
+# FTP root directory
+ftp_root_dir: /var/ftp
+ftp_upload_dir: /var/ftp/uploads
+
+# FTP users to create
+ftp_users:
+  - username: ftpuser1
+    password: "password"
+    home: /home/ftpuser1
+  - username: ftpuser2
+    password: "password"
+    home: /home/ftpuser2
+
+# Anonymous FTP settings
+ftp_anon_root: /var/ftp/pub

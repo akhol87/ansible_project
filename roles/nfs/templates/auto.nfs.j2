@@ -1,0 +1,3 @@
+# AutoFS map for NFS shares
+shared  -fstype=nfs,rw,soft  {{ groups['nfs_server'][0] }}:/var/nfs/shared
+autofs  -fstype=nfs,rw,soft  {{ groups['nfs_server'][0] }}:/var/nfs/autofs

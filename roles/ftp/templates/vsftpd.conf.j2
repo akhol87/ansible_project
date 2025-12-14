@@ -1,0 +1,55 @@
+# vsftpd configuration file
+# Managed by Ansible - Do not edit manually
+
+# Standalone mode
+listen={{ 'YES' if ftp_listen else 'NO' }}
+listen_ipv6=NO
+
+# Anonymous FTP
+anonymous_enable={{ 'YES' if ftp_anonymous_enable else 'NO' }}
+{% if ftp_anonymous_enable %}
+anon_upload_enable=YES
+anon_mkdir_write_enable=YES
+anon_root={{ ftp_anon_root }}
+{% endif %}
+
+# Local users
+local_enable={{ 'YES' if ftp_local_enable else 'NO' }}
+write_enable={{ 'YES' if ftp_write_enable else 'NO' }}
+local_umask={{ ftp_local_umask }}
+
+# Chroot settings
+chroot_local_user={{ 'YES' if ftp_chroot_local_user else 'NO' }}
+allow_writeable_chroot={{ 'YES' if ftp_allow_writeable_chroot else 'NO' }}
+
+# Messages and logging
+dirmessage_enable={{ 'YES' if ftp_dirmessage_enable else 'NO' }}
+xferlog_enable={{ 'YES' if ftp_xferlog_enable else 'NO' }}
+connect_from_port_20={{ 'YES' if ftp_connect_from_port_20 else 'NO' }}
+xferlog_std_format={{ 'YES' if ftp_xferlog_std_format else 'NO' }}
+xferlog_file=/var/log/vsftpd.log
+
+# Passive mode configuration
+pasv_enable={{ 'YES' if ftp_pasv_enable else 'NO' }}
+pasv_min_port={{ ftp_pasv_min_port }}
+pasv_max_port={{ ftp_pasv_max_port }}
+pasv_address={{ ansible_default_ipv4.address }}
+
+# Security settings
+userlist_enable={{ 'YES' if ftp_userlist_enable else 'NO' }}
+userlist_deny=NO
+userlist_file=/etc/vsftpd/user_list
+#tcp_wrappers={{ 'YES' if ftp_tcp_wrappers else 'NO' }}
+
+# PAM settings
+pam_service_name={{ ftp_pam_service_name }}
+
+# Performance settings
+idle_session_timeout=600
+data_connection_timeout=120
+max_clients=50
+max_per_ip=5
+
+# Security enhancements
+hide_ids=YES
+use_localtime=YES
