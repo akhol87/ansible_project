@@ -1,49 +1,36 @@
 ---
 - name: Remove old Docker versions
-  yum:
-    name:
-      - docker
-      - docker-client
-      - docker-client-latest
-      - docker-common
-      - docker-latest
-      - docker-latest-logrotate
-      - docker-logrotate
-      - docker-engine
-    state: absent
+  command: >
+    dnf remove -y
+    docker docker-client docker-client-latest docker-common
+    docker-latest docker-latest-logrotate docker-logrotate docker-engine
+    --disablerepo=appstream
   become: yes
+  ignore_errors: yes
 
-- name: Install required packages
-  yum:
-    name:
-      - yum-utils
-      - device-mapper-persistent-data
-      - lvm2
-      - python3-pip
-    state: present
+- name: Install base OS dependencies (NO AppStream)
+  command: >
+    dnf install -y
+    device-mapper-persistent-data
+    lvm2
+    --disablerepo=appstream
   become: yes
 
 - name: Add Docker repository
-  command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  command: >
+    dnf config-manager --add-repo
+    https://download.docker.com/linux/centos/docker-ce.repo
   args:
     creates: /etc/yum.repos.d/docker-ce.repo
   become: yes
 
-- name: Install Docker packages
-  yum:
-    name: "{{ docker_packages }}"
-    state: present
+- name: Install Docker engine
+  command: >
+    dnf install -y
+    docker-ce docker-ce-cli containerd.io
   become: yes
 
-- name: Install Docker Python module
-  pip:
-    name:
-      - docker
-      - docker-compose
-    executable: pip3
-  become: yes
-
-- name: Create Docker directory
+- name: Create Docker config directory
   file:
     path: /etc/docker
     state: directory
@@ -52,6 +39,8 @@
 
 - name: Configure Docker daemon
   copy:
+    dest: /etc/docker/daemon.json
+    mode: '0644'
     content: |
       {
         "log-driver": "json-file",
@@ -61,10 +50,15 @@
         },
         "storage-driver": "overlay2"
       }
-    dest: /etc/docker/daemon.json
-    mode: '0644'
-  become: yes
   notify: restart docker
+  become: yes
+
+- name: Enable and start Docker
+  systemd:
+    name: docker
+    enabled: true
+    state: started
+  become: yes
 
 - name: Add ansible user to docker group
   user:
@@ -73,33 +67,7 @@
     append: yes
   become: yes
 
-- name: Enable and start Docker service
-  systemd:
-    name: docker
-    enabled: "{{ docker_service_enabled }}"
-    state: "{{ docker_service_state }}"
-  become: yes
-
-- name: Open Docker Swarm ports in firewall
-  firewalld:
-    port: "{{ item }}"
-    permanent: yes
-    state: enabled
-    immediate: yes
-  loop:
-    - "2377/tcp"   # Swarm management
-    - "7946/tcp"   # Container network discovery
-    - "7946/udp"   # Container network discovery
-    - "4789/udp"   # Overlay network
-  become: yes
-  ignore_errors: yes
-
-- name: Reload firewall
-  command: firewall-cmd --reload
-  become: yes
-  ignore_errors: yes
-
-- name: Wait for Docker to be ready
+- name: Wait for Docker socket
   wait_for:
     path: /var/run/docker.sock
     state: present

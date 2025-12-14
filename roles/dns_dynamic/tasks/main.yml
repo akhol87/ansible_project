@@ -1,8 +1,10 @@
 ---
-- name: Install BIND
-  ansible.builtin.dnf:
-    name: bind
-    state: present
+- name: Install BIND (bypass broken dnf modules)
+  command: >
+    dnf install -y bind bind-utils --disablerepo=appstream
+  args:
+    creates: /usr/sbin/named
+  become: yes
 
 - name: Ensure named is enabled
   service:

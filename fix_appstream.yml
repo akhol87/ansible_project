@@ -1,19 +1,18 @@
 ---
-- name: Emergency DNF repair on all hosts          # “сломалось всё”
+- name: Fix AppStream module metadata safely              # “один пакет капризничает”
   hosts: all
   become: yes
-  gather_facts: no
+  gather_facts: false
 
   tasks:
-
-    - name: Stop and disable dnf-makecache timer
+    - name: Stop and mask dnf-makecache.timer
       systemd:
         name: dnf-makecache.timer
         state: stopped
         enabled: no
-      ignore_errors: yes
+        masked: yes
 
-    - name: Remove DNF cache directory
+    - name: Remove DNF cache
       file:
         path: /var/cache/dnf
         state: absent
@@ -39,20 +38,17 @@
         group: root
         mode: '0755'
 
-    - name: Remove RPM database temporary files
+    - name: Remove RPM temporary DB files
       shell: rm -f /var/lib/rpm/__db*
-      become: yes
+      args:
+        warn: false
 
     - name: Rebuild RPM database
       command: rpm --rebuilddb
-      become: yes
 
-    - name: Ensure sane /etc/dnf/dnf.conf
+    - name: Force sane dnf.conf (disable modules)
       copy:
         dest: /etc/dnf/dnf.conf
-        owner: root
-        group: root
-        mode: '0644'
         content: |
           [main]
           gpgcheck=1
@@ -61,7 +57,8 @@
           best=True
           skip_if_unavailable=True
           module_platform_id=platform:el9
+          modules_enabled=0
           module_hotfixes=true
 
-    - name: Clean all DNF metadata
+    - name: Clean DNF metadata
       command: dnf clean all

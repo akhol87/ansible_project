@@ -2,6 +2,9 @@
   ansible.builtin.dnf:
     name: chrony
     state: present
+    disablerepo:
+      - appstream
+  become: yes
 
 - name: Deploy NTP client configuration
   template:

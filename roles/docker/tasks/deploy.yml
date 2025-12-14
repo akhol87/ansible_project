@@ -1,4 +1,20 @@
 ---
+# deploy.yml — runs ONLY on Swarm manager
+
+- name: Ensure Python is installed (manager only)
+  command: dnf install -y python3 --disablerepo=appstream
+  become: yes
+
+- name: Ensure pip is installed (manager only)
+  command: dnf install -y python3-pip --disablerepo=appstream
+  become: yes
+
+- name: Ensure Docker SDK for Python is installed
+  pip:
+    name: docker
+    executable: pip3
+  become: yes
+
 - name: Create working directory
   file:
     path: /tmp/webapp-build
@@ -35,10 +51,9 @@
     build:
       path: /tmp/webapp-build
       pull: yes
-    state: present
   become: yes
 
-- name: Create overlay network for application
+- name: Create overlay network
   docker_network:
     name: webapp-network
     driver: overlay
@@ -49,56 +64,20 @@
   docker_stack:
     name: "{{ app_name }}"
     compose:
-      - version: '3.8'
+      - version: "3.8"
         services:
           web:
             image: "{{ app_image_name }}:latest"
             deploy:
               replicas: "{{ app_replicas }}"
-              restart_policy:
-                condition: on-failure
-                delay: 5s
-                max_attempts: 3
               placement:
                 constraints:
                   - node.role == worker
-              update_config:
-                parallelism: 1
-                delay: 10s
             ports:
               - "{{ app_port }}:80"
             networks:
               - webapp-network
-            healthcheck:
-              test: ["CMD", "curl", "-f", "http://localhost/"]
-              interval: 30s
-              timeout: 10s
-              retries: 3
         networks:
           webapp-network:
             external: true
   become: yes
-
-- name: Wait for services to be ready
-  pause:
-    seconds: 15
-
-- name: Get service status
-  command: docker service ls
-  register: service_status
-  become: yes
-  changed_when: false
-
-- name: Display service status
-  debug:
-    var: service_status.stdout_lines
-
-- name: Get stack services
-  command: "docker stack services {{ app_name }}"
-  register: stack_services
-  become: yes
-  changed_when: false
-
-- name: Display stack services
-  debug:
-    var: stack_services.stdout_lines

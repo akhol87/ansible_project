@@ -1,9 +1,10 @@
 ---
-- name: Install bind-utils on client servers
-  yum:
-    name: bind-utils
-    state: present
-    update_cache: yes
+- name: Install BIND (bypass broken dnf modules)
+  command: >
+    dnf install -y bind-utils --disablerepo=appstream
+  args:
+    creates: /usr/sbin/named
+  become: yes
 
 - name: Disable SELinux
   selinux:
